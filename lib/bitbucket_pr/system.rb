@@ -15,7 +15,7 @@ module BitbucketPr
         credentials[:password] = [credentials[:password]].pack("u")
         File.open(file, "w") { |file| file.write(credentials.to_yaml) }
       rescue => e
-        say("Internal error: " + e.message, :red)
+        say("Internal error: " + e.message)
         false
       end
     end
@@ -26,7 +26,7 @@ module BitbucketPr
         credentials[:password] = credentials[:password].unpack("u")[0]
         credentials
       rescue => e
-        say("Internal error: " + e.message, :red)
+        say("Internal error: " + e.message)
         nil
       end
     end
