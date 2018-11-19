@@ -1,38 +1,79 @@
 # BitbucketPr
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/bitbucket_pr`. To experiment with that code, run `bin/console` for an interactive prompt.
+Gem is useful to submit pull-requests to Attlasian Bitbucket through CLI command __if you don't like to open new browser tab__
 
-TODO: Delete this and the text above, and describe your gem
+![](http://www.quickmeme.com/img/78/7802c0254fca6dc4b3ee20300007dc8aa4164ac99b466f66bb9fb84befec097a.jpg)
 
 ## Installation
 
-Add this line to your application's Gemfile:
-
-```ruby
-gem 'bitbucket_pr'
+```bash
+$ gem install bitbucket_pr
 ```
 
-And then execute:
+## Aliasing
 
-    $ bundle
+This is optional you can always use `$ bitbucket_pr` as an executable,
+but we'll be using `$ git pr` instead.
 
-Or install it yourself as:
+Create bash executable named `git-pr` with following snippet:
 
-    $ gem install bitbucket_pr
+```bash
+#!/bin/bash
+bitbucket_pr "$@"
+```
+
+and add this to your path. On macOS you can place this in `~/bin`
 
 ## Usage
 
-TODO: Write usage instructions here
+`source` `destination` and `title` are required options.
 
-## Development
+`username` `password` and `repository name` are also required, but can be saved for future.
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+#### Minimal setup 
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+```
+$ git pr [source] [destination] -t[title] -a[username:password]`
+```
+
+example:
+```
+$ git pr middleware-patch master -rdachinat/rack_pg -adachinat:3Edm$51dd2 -t'Patching a middleware'
+```
+
+you can use `--title="Patching a middelware" --auth="username:password"` style if you want
+
+#### Save credentials and repository name
+
+##### Warning: this will create file containing your encrypted password. Use at your own risks! 
+
+```
+$ git pr configure -u[username] -p[password] -r[repository_name]
+```
+
+Repository name has to be in `username/repository` format
+
+example: 
+
+```
+$ git pr configure -udachinat -p3Edm$51dd2 -rdachinat/rack_pg
+```
+
+Once you have credentials stored, you can skip `-r` and `-a` options
+
+#### More options
+
+* `-d` `--d` - Optional PR description
+* `--reviewers` - Optional reviewer username array (i.e.: --reviewers="reviewer1, reviewer2") 
+* `-c` `--close` - Optional close flag / close branch after PR is merged or not
+
+#### Help
+
+You can always use `git pr help` for further help 😄
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/bitbucket_pr. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/dachinat/bitbucket_pr. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 ## License
 
@@ -40,4 +81,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
-Everyone interacting in the BitbucketPr project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/bitbucket_pr/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the BitbucketPr project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/dachinat/bitbucket_pr/blob/master/CODE_OF_CONDUCT.md).

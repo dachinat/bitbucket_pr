@@ -1,0 +1,72 @@
+#!/usr/bin/env ruby
+
+require "bitbucket_pr"
+require "rubygems"
+require "commander/import"
+
+program :name, "bitbucket_pr"
+program :version, BitbucketPr::VERSION
+program :description, "Create Bitbucket PR using CLI command"
+default_command :create
+
+command :create do |c|
+  c.syntax = "bitbucket_pr [create] [source branch] [destination branch]"
+  c.option "-r STRING", "--repository STRING", String, "Your Bitbucket repository"
+  c.option "--auth STRING", String, "Your Bitbucket username:password"
+  c.option "--title STRING", String, "Your PR title"
+  c.option "--description STRING", String, "Your PR description"
+  c.option "--close", "Close Source Branch"
+  c.option "--reviewers Array", Array, "PR reviewer usernames"
+  c.summary = "Creates a new pull request with specified parameters"
+  c.description = c.summary
+  c.example "description", c.syntax
+  c.action do |_args, _options|
+    config = BitbucketPr.read
+
+    _options.default \
+      close: false,
+      repository: config&.[](:repository) || nil,
+      auth: config ? "#{config[:username]}:#{config[:password]}" : nil
+
+    unless _args[0] && _args[1]
+      (color("No source and destination branches given. See 'create --help'", :red); exit(1))
+    end
+
+    unless _options.repository
+      (color("No repository given. Either use '-r your_repository' or see 'configure --help'", :red); exit(1))
+    end
+
+    unless _options.auth
+      color("No authorization credentials. Either use '--auth=username:password' or see 'configure --help'", :red)
+      exit(1)
+    else
+      unless _options.auth =~ /^.+\:.+$/
+        (color("--auth value is not well-formated use 'your_username:your_password style'", :red); exit(1))
+      end
+    end
+
+    (color("No PR title given. Use '--title option'", :red); exit(1)) unless _options.title
+
+    BitbucketPr.create(_args[0], _args[1], _options)
+  end
+end
+
+command :configure do |c|
+  c.syntax = "bitbucket_pr configure --username=[username] --password=[password]"
+  c.option "--username STRING", String, "Your Bitbucket username"
+  c.option "--password STRING", String, "Your Bitbucket password"
+  c.option "--repository STRING", String, "Your Bitbucket repository (username/repo)"
+  c.summary = "Creates a new pull request with specified parameters"
+  c.description = c.summary
+  c.example "Saves username, password and repo. for future use", c.syntax
+  c.action do |_args, _options|
+    username = _options.username
+    password = _options.password
+    repository = _options.repository
+    (color("No --username specified", :red); exit(1)) unless username
+    (color("No --password specified", :red); exit(1)) unless password
+    (color("No --repository specified", :red); exit(1)) unless repository
+    BitbucketPr.write(username: username, password: password, repository: repository)
+    color "Password for your Bitbucket account '#{username}' and repository were saved!", :green
+  end
+end

@@ -9,9 +9,9 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Dachi Natsvlishvili"]
   spec.email         = ["dachinat@gmail.com"]
 
-  spec.summary       = %q{Create BitBucket PR with single CLI command}
-  spec.description   = %q{Gem uses Bitbucket API endpoint to create a new pull-reqeust}
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.summary       = "Create BitBucket PR with single CLI command"
+  spec.description   = "Gem uses Bitbucket API endpoint to create a new pull-reqeust"
+  spec.homepage      = "https://dachinat@bitbucket.org/dachinat/bitbucket_pr.git"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
@@ -23,7 +23,7 @@ Gem::Specification.new do |spec|
       "public gem pushes."
   end
 
-  spec.files         = `git ls-files -z`.split("\x0").reject do |f|
+  spec.files = `git ls-files -z`.split("\x0").reject do |f|
     f.match(%r{^(test|spec|features)/})
   end
   spec.bindir        = "exe"
@@ -33,4 +33,8 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "bundler", "~> 1.16"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec", "~> 3.0"
+  spec.add_development_dependency "rubocop", "~> 0.59"
+
+  spec.add_dependency "commander", "~> 4.4"
+  spec.add_dependency "faraday", "~> 0.15"
 end
