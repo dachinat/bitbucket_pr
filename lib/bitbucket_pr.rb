@@ -2,6 +2,7 @@ require "bitbucket_pr/system"
 require "bitbucket_pr/version"
 require "faraday"
 require "json"
+require "growl"
 
 module BitbucketPr
   def self.create(source, destination, options)
@@ -43,6 +44,12 @@ module BitbucketPr
     end
 
     say res.reason_phrase
+
+    if res.reason_phrase == "Created"
+      notify_ok "PR Created"
+    else
+      notify_error "PR not created"
+    end
 
     begin
       body = JSON.parse(res.body)

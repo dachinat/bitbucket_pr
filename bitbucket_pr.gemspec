@@ -37,4 +37,5 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "commander", "~> 4.4"
   spec.add_dependency "faraday", "~> 0.15"
+  spec.add_dependency "growl", "~> 1.0"
 end
