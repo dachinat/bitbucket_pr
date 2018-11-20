@@ -69,7 +69,7 @@ Once you have credentials stored, you can skip `-r` and `-a` options
 
 #### More options
 
-* `-d` `--d` - Optional PR description
+* `-d` `--description` - Optional PR description
 * `--reviewers` - Optional reviewer username array (i.e.: --reviewers="reviewer1, reviewer2") 
 * `-c` `--close` - Optional close flag / close branch after PR is merged or not
 
