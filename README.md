@@ -24,6 +24,12 @@ bitbucket_pr "$@"
 
 and add this to your path. On macOS you can place this in `~/bin`
 
+You might also need to
+
+```bash
+$ chmod +x ~/bin/git-pr
+``` 
+
 ## Usage
 
 `source` `destination` and `title` are required options.
