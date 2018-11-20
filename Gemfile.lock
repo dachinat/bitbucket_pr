@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    bitbucket_pr (0.1.1)
+    bitbucket_pr (0.1.2)
       commander (~> 4.4)
       faraday (~> 0.15)
       growl (~> 1.0)

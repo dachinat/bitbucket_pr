@@ -21,7 +21,6 @@ module BitbucketPr
         credentials[:password] = credentials[:password].unpack("u")[0]
         credentials
       rescue => e
-        say("Internal error: " + e.message)
         nil
       end
     end
