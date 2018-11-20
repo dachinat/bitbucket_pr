@@ -10,7 +10,7 @@ RSpec.describe BitbucketPr do
 
   it "writes a configuration file" do
     testIO = StringIO.new
-    allow(File).to receive(:open).with(BitbucketPr.file,'w').and_yield( testIO )
+    allow(File).to receive(:open).with(BitbucketPr.file, "w").and_yield(testIO)
     BitbucketPr.write(username: "test1", password: "test2", repository: "test3")
     expect(testIO.string.inspect).to include("test1")
     expect(testIO.string.inspect).to include("%=&5S=#(`")

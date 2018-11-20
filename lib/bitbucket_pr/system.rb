@@ -11,13 +11,8 @@ module BitbucketPr
     def file; File.join(home, FILE_NAME); end
 
     def write(credentials)
-      begin
-        credentials[:password] = [credentials[:password]].pack("u")
-        File.open(file, "w") { |file| file.write(credentials.to_yaml) }
-      rescue => e
-        say("Internal error: " + e.message)
-        false
-      end
+      credentials[:password] = [credentials[:password]].pack("u")
+      File.open(file, "w") { |file| file.write(credentials.to_yaml) }
     end
 
     def read
